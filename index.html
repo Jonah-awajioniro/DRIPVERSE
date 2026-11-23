@@ -1,0 +1,655 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090910">
+<title>DRIPVERSE | Future of Fashion</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root{
+ --bg:#090910;--panel:#151521;--line:#29293b;
+ --purple:#a78bfa;--cyan:#5eead4;--white:#fff;
+ --muted:#a3a3b5;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--white);font-family:Inter,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+header{
+ position:sticky;top:0;z-index:30;background:#090910ed;
+ backdrop-filter:blur(20px);border-bottom:1px solid var(--line);
+ padding:17px 5%;display:flex;align-items:center;justify-content:space-between
+}
+.logo{font:800 25px 'Space Grotesk';letter-spacing:-1.5px}
+.logo span{color:var(--purple)}
+nav{display:flex;gap:25px}
+nav a{color:#bbb;text-decoration:none;font-size:12px}
+nav a:hover{color:var(--purple)}
+.header-actions{display:flex;gap:9px;align-items:center}
+.btn{
+ border:1px solid var(--line);background:var(--panel);
+ color:white;padding:10px 15px;border-radius:25px;font-size:12px
+}
+.primary{
+ background:linear-gradient(110deg,#a78bfa,#6550dc);
+ border:0;color:white;padding:13px 21px;border-radius:30px;
+ font-weight:700;font-size:12px
+}
+main{max-width:1450px;margin:auto;padding:35px 5%}
+.hero{
+ min-height:440px;border:1px solid var(--line);border-radius:24px;
+ overflow:hidden;display:flex;align-items:center;position:relative;
+ background:radial-gradient(ellipse at 75% 50%,#44336d,#171526 45%,#101018 80%);
+}
+.hero-content{padding:55px;max-width:600px;position:relative;z-index:2}
+.eyebrow{color:var(--cyan);font-size:10px;letter-spacing:3px;margin-bottom:15px}
+.hero h1{font:700 clamp(42px,7vw,78px) 'Space Grotesk';line-height:1.05}
+.hero h1 span{color:var(--purple)}
+.hero p{color:#c0bfd0;font-size:13px;line-height:1.8;margin:20px 0}
+.hero-model{
+ position:absolute;right:3%;bottom:0;height:94%;width:43%;
+ object-fit:contain;filter:drop-shadow(0 10px 40px #0008)
+}
+.section{margin-top:55px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.section-head h2{font:600 25px 'Space Grotesk'}
+.section-head p{color:var(--muted);font-size:11px;margin-top:7px}
+.categories{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.category{
+ padding:10px 18px;border-radius:25px;background:var(--panel);
+ border:1px solid var(--line);color:#ccc;font-size:11px
+}
+.category.active{background:var(--purple);color:#111;border-color:var(--purple)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.product{
+ background:var(--panel);border:1px solid var(--line);
+ border-radius:17px;overflow:hidden;transition:.3s
+}
+.product:hover{transform:translateY(-5px);border-color:var(--purple)}
+.product-img{height:230px;position:relative;background:#222;overflow:hidden}
+.product-img img{height:100%;width:100%;object-fit:cover;transition:.4s}
+.product:hover img{transform:scale(1.06)}
+.heart{
+ position:absolute;top:12px;right:12px;border:0;
+ border-radius:50%;height:34px;width:34px;background:#111b;color:white;font-size:18px
+}
+.product-info{padding:14px}
+.product-info h3{font-size:13px;margin-bottom:7px}
+.product-info p{font-size:10px;color:var(--muted)}
+.product-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.price{color:var(--cyan);font-size:13px;font-weight:700}
+.add{background:white;color:#111;border:0;border-radius:20px;padding:9px 13px;font-size:11px;font-weight:700}
+.studio{
+ display:grid;grid-template-columns:1fr 1.8fr 1fr;gap:15px
+}
+.stage{
+ min-height:530px;border-radius:22px;position:relative;overflow:hidden;
+ background:radial-gradient(ellipse at 50% 40%,#686174,#302c3c 55%,#15141e);
+ border:1px solid var(--line)
+}
+.stage-tabs{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:16px;position:relative;z-index:3}
+.stage-tabs button{
+ border:1px solid #ffffff30;background:#ffffff15;color:white;
+ padding:8px 12px;border-radius:20px;font-size:10px
+}
+.stage-tabs button.active{background:white;color:#111}
+.stage-model{
+ position:absolute;inset:65px 0 65px;display:flex;
+ justify-content:center;align-items:center
+}
+.stage-model img{
+ height:100%;max-width:85%;object-fit:contain;
+ filter:drop-shadow(0 15px 20px #0007)
+}
+.stage-model .user-preview{
+ position:absolute;width:100%;height:100%;object-fit:contain;
+ display:none
+}
+.stage-bottom{
+ position:absolute;bottom:12px;left:5%;width:90%;
+ background:#151520d9;border:1px solid var(--line);
+ border-radius:13px;padding:13px;z-index:4
+}
+.stage-bottom p{font-size:11px;margin-bottom:10px}
+.colors{display:flex;gap:10px;align-items:center}
+.swatch{width:22px;height:22px;border:2px solid white;border-radius:50%}
+.side-products{display:flex;flex-direction:column;gap:13px}
+.side-products h3{font:600 13px 'Space Grotesk'}
+.mini{
+ background:var(--panel);border:1px solid var(--line);
+ border-radius:14px;overflow:hidden
+}
+.mini img{height:130px;width:100%;object-fit:cover}
+.mini div{padding:11px}
+.mini h4{font-size:11px}
+.mini p{font-size:11px;color:var(--cyan);margin-top:7px}
+.tools{
+ display:grid;grid-template-columns:repeat(4,1fr);gap:14px
+}
+.tool{
+ background:var(--panel);border:1px solid var(--line);
+ border-radius:17px;padding:22px
+}
+.tool .emoji{font-size:25px}
+.tool h3{font-size:13px;margin:14px 0 8px}
+.tool p{font-size:11px;color:var(--muted);line-height:1.7}
+.tool button{margin-top:14px}
+.upload{
+ border:1px dashed var(--purple);padding:15px;
+ border-radius:12px;font-size:11px;color:#ccc;
+ text-align:center;margin-top:10px
+}
+.upload input{width:100%;margin-top:12px;font-size:10px}
+.cart-panel{
+ position:fixed;right:-450px;top:0;width:min(400px,100%);
+ height:100vh;background:#13131e;border-left:1px solid var(--line);
+ z-index:60;padding:25px;transition:.3s;overflow:auto
+}
+.cart-panel.open{right:0}
+.cart-row{display:flex;justify-content:space-between;gap:12px;
+ padding:14px 0;border-bottom:1px solid var(--line);font-size:12px}
+.modal{
+ display:none;position:fixed;inset:0;background:#000b;
+ z-index:80;justify-content:center;align-items:center;padding:15px
+}
+.modal.open{display:flex}
+.modal-content{
+ background:#171722;border:1px solid var(--line);
+ border-radius:20px;padding:25px;width:min(430px,100%);max-height:90vh;overflow:auto
+}
+.modal-content h2{font:600 23px 'Space Grotesk';margin-bottom:15px}
+.modal-content input,.modal-content select{
+ display:block;width:100%;padding:13px;margin:10px 0;
+ border-radius:9px;background:#0e0e17;color:white;border:1px solid var(--line)
+}
+.modal-content label{font-size:11px;color:var(--muted)}
+.modal-content button{margin-top:10px}
+.close{float:right;background:none;border:0;color:white;font-size:22px}
+footer{
+ margin-top:70px;border-top:1px solid var(--line);
+ padding:30px 5%;display:flex;justify-content:space-between;
+ gap:20px;flex-wrap:wrap;color:var(--muted);font-size:11px
+}
+#toast{
+ position:fixed;bottom:25px;left:50%;transform:translate(-50%,100px);
+ background:white;color:#111;padding:13px 20px;border-radius:25px;
+ z-index:100;transition:.3s;font-size:12px
+}
+#toast.show{transform:translate(-50%,0)}
+@media(max-width:850px){
+ nav{display:none}
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .studio{grid-template-columns:1fr}
+ .stage{grid-row:1;min-height:510px}
+ .side-products{display:grid;grid-template-columns:repeat(2,1fr)}
+ .side-products h3{grid-column:1/-1}
+ .tools{grid-template-columns:repeat(2,1fr)}
+ .hero-model{opacity:.45;width:65%}
+}
+@media(max-width:480px){
+ header{padding:15px 4%}
+ .logo{font-size:20px}
+ main{padding:25px 4%}
+ .hero{min-height:400px}
+ .hero-content{padding:25px}
+ .hero-model{width:80%;opacity:.3}
+ .grid{gap:9px}
+ .product-img{height:160px}
+ .product-info{padding:10px}
+ .section-head h2{font-size:20px}
+ .tools{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">DRIP<span>VERSE</span></div>
+ <nav>
+  <a href="#">Home</a>
+  <a href="#studio">Virtual Studio</a>
+  <a href="#shop">Shop</a>
+  <a href="#ai">AI Stylist</a>
+  <a href="#about">About</a>
+ </nav>
+ <div class="header-actions">
+  <select id="currency" class="btn" onchange="renderProducts()">
+   <option value="NGN">NGN ₦</option>
+   <option value="USD">USD $</option>
+  </select>
+  <button class="btn" onclick="openModal('account')">Account</button>
+  <button class="btn" onclick="toggleCart()">Bag <span id="cartCount">0</span></button>
+ </div>
+</header>
+
+<main>
+
+<section class="hero">
+ <div class="hero-content">
+  <div class="eyebrow">THE FUTURE OF FASHION</div>
+  <h1>Define your <span>DRIP.</span></h1>
+  <p>
+   Discover fashion without limits. Explore your style,
+   experiment with outfits and experience the next generation
+   of digital fashion.
+  </p>
+  <button class="primary" onclick="document.getElementById('studio').scrollIntoView({behavior:'smooth'})">
+   ENTER VIRTUAL STUDIO →
+  </button>
+ </div>
+ <img class="hero-model"
+ src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800"
+ alt="Fashion model">
+</section>
+
+<section class="section" id="studio">
+ <div class="section-head">
+  <div><h2>Virtual Fashion Studio</h2>
+  <p>Explore outfits and customise your look.</p></div>
+  <span class="eyebrow">● STUDIO ONLINE</span>
+ </div>
+
+ <div class="studio">
+  <div class="side-products">
+   <h3>OUTERWEAR</h3>
+   <div class="mini">
+    <img src="https://images.unsplash.com/photo-1548126032-079a0fb0099d?w=400" alt="Jacket">
+    <div><h4>Urban Jacket</h4><p>₦45,000</p>
+    <button class="add" onclick="addToCart(1)">Add</button></div>
+   </div>
+   <div class="mini">
+    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400" alt="Fashion coat">
+    <div><h4>Street Coat</h4><p>₦38,000</p>
+    <button class="add" onclick="addToCart(5)">Add</button></div>
+   </div>
+  </div>
+
+  <div class="stage">
+   <div class="stage-tabs">
+    <button class="active" onclick="modelType('female',this)">Female</button>
+    <button onclick="modelType('male',this)">Male</button>
+    <button onclick="modelType('both',this)">Unisex</button>
+   </div>
+   <div class="stage-model">
+    <img id="modelImage"
+    src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800"
+    alt="Virtual model">
+    <img id="userImage" class="user-preview" alt="Uploaded portrait preview">
+   </div>
+   <div class="stage-bottom">
+    <p>OUTFIT COLOUR CUSTOMISATION</p>
+    <div class="colors">
+     <button class="swatch" style="background:#8b5cf6" onclick="changeColor('#8b5cf6')"></button>
+     <button class="swatch" style="background:#111" onclick="changeColor('#111')"></button>
+     <button class="swatch" style="background:#eee" onclick="changeColor('#eee')"></button>
+     <button class="swatch" style="background:#16a34a" onclick="changeColor('#16a34a')"></button>
+     <button class="swatch" style="background:#dc2626" onclick="changeColor('#dc2626')"></button>
+     <span style="font-size:10px;color:#aaa;margin-left:auto">Choose colour</span>
+    </div>
+   </div>
+  </div>
+
+  <div class="side-products">
+   <h3>POPULAR ITEMS</h3>
+   <div class="mini">
+    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" alt="Sneakers">
+    <div><h4>Future Sneakers</h4><p>₦55,000</p>
+    <button class="add" onclick="addToCart(3)">Add</button></div>
+   </div>
+   <div class="mini">
+    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" alt="Watch">
+    <div><h4>Luxury Watch</h4><p>₦35,000</p>
+    <button class="add" onclick="addToCart(4)">Add</button></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="ai">
+ <div class="section-head">
+  <div><h2>AI Fashion Tools</h2>
+  <p>Personalise your fashion experience.</p></div>
+ </div>
+ <div class="tools">
+  <div class="tool">
+   <div class="emoji">✨</div>
+   <h3>Virtual Try-On</h3>
+   <p>Upload a picture to preview your fashion experience.</p>
+   <div class="upload">
+    Upload your portrait
+    <input type="file" accept="image/*" onchange="previewImage(event)">
+   </div>
+  </div>
+  <div class="tool">
+   <div class="emoji">🎨</div>
+   <h3>Style Customisation</h3>
+   <p>Explore colour choices and discover new combinations.</p>
+   <button class="primary" onclick="document.getElementById('studio').scrollIntoView({behavior:'smooth'})">Customise</button>
+  </div>
+  <div class="tool">
+   <div class="emoji">🧠</div>
+   <h3>AI Outfit Recommendations</h3>
+   <p>Explore curated outfit combinations from our collection.</p>
+   <button class="primary" onclick="recommend()">Recommend</button>
+  </div>
+  <div class="tool">
+   <div class="emoji">📏</div>
+   <h3>Size Assistant</h3>
+   <p>Choose your usual clothing size to see available size guidance.</p>
+   <select id="size">
+    <option value="">Choose your size</option>
+    <option>XS</option><option>S</option><option>M</option>
+    <option>L</option><option>XL</option><option>XXL</option>
+   </select>
+   <button class="primary" onclick="sizeGuide()">Find My Size</button>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="shop">
+ <div class="section-head">
+  <div><h2>Discover the Collection</h2>
+  <p>Fashion without boundaries.</p></div>
+ </div>
+ <div class="categories">
+  <button class="category active" onclick="filterProducts('All',this)">All</button>
+  <button class="category" onclick="filterProducts('Outerwear',this)">Outerwear</button>
+  <button class="category" onclick="filterProducts('Bottoms',this)">Bottoms</button>
+  <button class="category" onclick="filterProducts('Shoes',this)">Shoes</button>
+  <button class="category" onclick="filterProducts('Accessories',this)">Accessories</button>
+ </div>
+ <div class="grid" id="productGrid"></div>
+</section>
+
+<section class="section" id="about">
+ <div class="section-head"><h2>Fashion. Technology. Identity.</h2></div>
+ <p style="color:#aaa;line-height:1.9;font-size:13px;max-width:700px">
+  DRIPVERSE is a digital fashion destination bringing together
+  streetwear, luxury, technology and personal style.
+  Explore collections, discover new looks and build your own fashion identity.
+ </p>
+</section>
+
+</main>
+
+<footer>
+ <div class="logo">DRIP<span>VERSE</span></div>
+ <p>© 2026 DRIPVERSE. All rights reserved.</p>
+ <p>Fashion beyond boundaries.</p>
+</footer>
+
+<!-- Shopping bag -->
+<aside class="cart-panel" id="cartPanel">
+ <button class="close" onclick="toggleCart()">×</button>
+ <h2 style="margin:20px 0">Your Shopping Bag</h2>
+ <div id="cartItems"></div>
+ <h3 id="total" style="margin:20px 0">Total: ₦0</h3>
+ <button class="primary" style="width:100%" onclick="checkout()">Proceed to Checkout</button>
+ <button class="btn" style="width:100%;margin-top:10px" onclick="toggleCart()">Continue Shopping</button>
+</aside>
+
+<!-- Account modal -->
+<div class="modal" id="account">
+ <div class="modal-content">
+  <button class="close" onclick="closeModal('account')">×</button>
+  <h2>DRIPVERSE Account</h2>
+  <input id="email" type="email" placeholder="Email address">
+  <input id="password" type="password" placeholder="Password">
+  <button class="primary" style="width:100%" onclick="login()">Sign In / Create Account</button>
+  <p style="font-size:10px;color:#aaa;margin-top:12px">
+   Demo account interface. Real authentication requires a secure backend.
+  </p>
+ </div>
+</div>
+
+<!-- Checkout modal -->
+<div class="modal" id="payment">
+ <div class="modal-content">
+  <button class="close" onclick="closeModal('payment')">×</button>
+  <h2>Checkout</h2>
+  <label>Full name</label>
+  <input id="customerName" placeholder="Your full name">
+  <label>Delivery address</label>
+  <input id="address" placeholder="Your delivery address">
+  <label>Payment method</label>
+  <select id="paymentMethod">
+   <option value="Paystack">Paystack</option>
+   <option value="Flutterwave">Flutterwave</option>
+   <option value="Bank Transfer">Bank Transfer</option>
+  </select>
+  <p id="checkoutTotal" style="color:#5eead4;font-weight:bold;margin:12px 0"></p>
+  <button class="primary" style="width:100%" onclick="placeOrder()">Place Demo Order</button>
+  <p style="font-size:10px;color:#aaa;margin-top:12px">
+   Demo checkout only. No real payment will be collected.
+  </p>
+ </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const products=[
+ {id:1,name:"Urban Puffer Jacket",category:"Outerwear",price:45000,image:"https://images.unsplash.com/photo-1548126032-079a0fb0099d?w=600"},
+ {id:2,name:"Classic Denim Pants",category:"Bottoms",price:28000,image:"https://images.unsplash.com/photo-1542272604-787c3835535d?w=600"},
+ {id:3,name:"Future Runner Sneakers",category:"Shoes",price:55000,image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600"},
+ {id:4,name:"Minimalist Watch",category:"Accessories",price:35000,image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600"},
+ {id:5,name:"Premium Street Coat",category:"Outerwear",price:38000,image:"https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600"},
+ {id:6,name:"Classic White Sneakers",category:"Shoes",price:62000,image:"https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600"},
+ {id:7,name:"Casual Fashion Pants",category:"Bottoms",price:25000,image:"https://images.unsplash.com/photo-1506629905607-d9d9d6c9e4b0?w=600"},
+ {id:8,name:"Premium Accessories",category:"Accessories",price:18000,image:"https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=600"}
+];
+
+let cart=[];
+let wishlist=[];
+let currentFilter="All";
+let currentModel="female";
+let currentColor="#8b5cf6";
+
+function currency(){
+ return document.getElementById("currency").value;
+}
+
+function money(amount){
+ if(currency()==="USD"){
+  return "$"+(amount/1400).toFixed(2);
+ }
+ return "₦"+amount.toLocaleString("en-NG");
+}
+
+function renderProducts(){
+ const grid=document.getElementById("productGrid");
+ const filtered=products.filter(p=>currentFilter==="All"||p.category===currentFilter);
+
+ grid.innerHTML=filtered.map(p=>`
+  <article class="product">
+   <div class="product-img">
+    <img src="${p.image}" alt="${p.name}" loading="lazy">
+    <button class="heart" onclick="toggleWish(${p.id})">
+     ${wishlist.includes(p.id)?"♥":"♡"}
+    </button>
+   </div>
+   <div class="product-info">
+    <h3>${p.name}</h3>
+    <p>${p.category}</p>
+    <div class="product-bottom">
+     <span class="price">${money(p.price)}</span>
+     <button class="add" onclick="addToCart(${p.id})">ADD +</button>
+    </div>
+   </div>
+  </article>
+ `).join("");
+}
+
+function filterProducts(category,button){
+ currentFilter=category;
+ document.querySelectorAll(".category").forEach(b=>b.classList.remove("active"));
+ button.classList.add("active");
+ renderProducts();
+}
+
+function addToCart(id){
+ const product=products.find(p=>p.id===id);
+ const existing=cart.find(p=>p.id===id);
+ if(existing)existing.quantity++;
+ else cart.push({...product,quantity:1});
+ updateCart();
+ toast(product.name+" added to bag");
+}
+
+function removeFromCart(id){
+ cart=cart.filter(p=>p.id!==id);
+ updateCart();
+}
+
+function updateCart(){
+ document.getElementById("cartCount").textContent=
+ cart.reduce((s,p)=>s+p.quantity,0);
+
+ document.getElementById("cartItems").innerHTML=cart.length?
+ cart.map(p=>`
+ <div class="cart-row">
+  <div><strong>${p.name}</strong><br><br>
+  ${p.quantity} × ${money(p.price)}</div>
+  <button class="btn" onclick="removeFromCart(${p.id})">Remove</button>
+ </div>`).join(""):"Your bag is empty.";
+
+ const total=cart.reduce((s,p)=>s+p.price*p.quantity,0);
+ document.getElementById("total").textContent="Total: "+money(total);
+}
+
+function toggleCart(){
+ document.getElementById("cartPanel").classList.toggle("open");
+}
+
+function toggleWish(id){
+ if(wishlist.includes(id))wishlist=wishlist.filter(x=>x!==id);
+ else wishlist.push(id);
+ renderProducts();
+ toast("Wishlist updated");
+}
+
+function checkout(){
+ if(!cart.length){toast("Your bag is empty");return;}
+ const total=cart.reduce((s,p)=>s+p.price*p.quantity,0);
+ document.getElementById("checkoutTotal").textContent="Order total: "+money(total);
+ toggleCart();
+ openModal("payment");
+}
+
+function placeOrder(){
+ const name=document.getElementById("customerName").value.trim();
+ const address=document.getElementById("address").value.trim();
+
+ if(!name||!address){toast("Enter your name and delivery address");return;}
+
+ const orderId="DRIP"+Date.now().toString().slice(-7);
+ const order={
+  id:orderId,
+  name,
+  address,
+  items:[...cart],
+  date:new Date().toLocaleDateString()
+ };
+
+ localStorage.setItem("dripverseOrder",JSON.stringify(order));
+ cart=[];
+ updateCart();
+ closeModal("payment");
+ toast("Demo order created: "+orderId);
+
+ setTimeout(()=>{
+  alert("ORDER CONFIRMED\n\nOrder ID: "+orderId+
+  "\nStatus: Demo order received.\n\nYou can use this ID to view your demo order.");
+ },300);
+}
+
+function openModal(id){
+ document.getElementById(id).classList.add("open");
+}
+
+function closeModal(id){
+ document.getElementById(id).classList.remove("open");
+}
+
+function login(){
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+
+ if(!email||!password){toast("Enter your email and password");return;}
+
+ closeModal("account");
+ toast("Demo sign-in successful");
+}
+
+function modelType(type,button){
+ currentModel=type;
+ document.querySelectorAll(".stage-tabs button").forEach(b=>b.classList.remove("active"));
+ button.classList.add("active");
+
+ const img=document.getElementById("modelImage");
+ img.src=type==="male"
+ ?"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800"
+ :"https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800";
+
+ if(type==="both")toast("Unisex collection selected");
+}
+
+function changeColor(color){
+ currentColor=color;
+ document.querySelector(".stage").style.boxShadow=
+ "inset 0 0 55px "+color+"55";
+ toast("Colour preference updated");
+}
+
+function previewImage(event){
+ const file=event.target.files[0];
+ if(!file)return;
+
+ if(!file.type.startsWith("image/")){
+  toast("Please select an image");
+  return;
+ }
+
+ const reader=new FileReader();
+ reader.onload=e=>{
+  const img=document.getElementById("userImage");
+  img.src=e.target.result;
+  img.style.display="block";
+  document.getElementById("modelImage").style.display="none";
+  toast("Portrait preview loaded");
+ };
+ reader.readAsDataURL(file);
+}
+
+function recommend(){
+ const selections=products.filter(p=>p.category==="Outerwear"||p.category==="Shoes");
+ alert("YOUR STYLE RECOMMENDATION\n\n"+
+ selections.map(p=>p.name+" - "+money(p.price)).join("\n")+
+ "\n\nThese are curated suggestions, not AI-generated recommendations.");
+}
+
+function sizeGuide(){
+ const size=document.getElementById("size").value;
+ if(!size){toast("Please choose your usual size");return;}
+ alert("Your selected size is "+size+
+ "\n\nCheck the individual product size chart before ordering. This is a basic size selection, not a body measurement.");
+}
+
+function toast(message){
+ const el=document.getElementById("toast");
+ el.textContent=message;
+ el.classList.add("show");
+ clearTimeout(window.toastTimer);
+ window.toastTimer=setTimeout(()=>el.classList.remove("show"),2500);
+}
+
+renderProducts();
+updateCart();
+</script>
+</body>
+</html>
